@@ -1,0 +1,244 @@
+swagger: "2.0"
+
+info:
+  title: API
+  description: API for futoVerseny
+  version: 1.0.0
+
+host: localhost:8080
+basePath: /v1
+schemes:
+  -https
+
+paths:
+  /getRunners:
+    get:
+      summary: Returns a list of runners
+      operationId: GetRunners
+      produces:
+        - application/json
+      responses:
+        200:
+          description: List of the runners
+          schema:
+            $ref: '#/definitions/Runners'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: Not found
+        500:
+          description: Internal Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /addRunner:
+    post:
+      summary: Add a new runner
+      operationId: AddRunner
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: runner
+          required: true
+          schema:
+            $ref: '#/definitions/Runner'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: Internal Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+
+  /getRaceRunners/{ID}:
+    get:
+      summary: Returns a list of runners from the race
+      operationId: GetRaceRunners
+      produces:
+        - application/json
+      parameters:
+        - name: ID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List of the runners from the race
+          schema:
+            $ref: '#/definitions/Runners'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: Not found
+        500:
+          description: Internal Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /updateRace:
+    post:
+      summary: Update race name and/or distance
+      operationId: UpdateRace
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: race
+          required: true
+          schema:
+            $ref: '#/definitions/Race'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: Not found
+        500:
+          description: Internal Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /addResult:
+    post:
+      summary: Add a new result for the runner and race
+      operationId: AddResult
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: result
+          required: true
+          schema:
+            $ref: '#/definitions/Results'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        500:
+          description: Internal Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /getAverageTime/{VERSENYID}:
+    get:
+      summary: Returns the average time of result for the given race
+      operationId: GetAverageTime
+      produces:
+        - application/json
+      parameters:
+        - name: VERSENYID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Average time of results for the race
+          schema:
+            type: object
+            properties:
+              averageTime:
+                description: average time in min
+                type: integer
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: Not found
+        500:
+          description: Internal Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+definitions:
+  ErrorResponse:
+    type: object
+    properties:
+      ErrorMsg:
+        type: string
+
+  Runner:
+    type: object
+    properties:
+      id:
+        type: integer
+      sex:
+        type: string
+        enum: [ male,female ]
+      age:
+        type: integer
+      name:
+        type: string
+    required:
+      - id
+      - sex
+      - age
+      - name
+
+  Runners:
+    type: array
+    items:
+      $ref: '#/definitions/Runner'
+
+  Race:
+    type: object
+    properties:
+      name:
+        type: string
+      distance:
+        description: distance in km
+        type: integer
+      id:
+        type: integer
+    required:
+      - id
+
+  Result:
+    type: object
+    properties:
+      runnerId:
+        type: integer
+      raceId:
+        type: integer
+      time:
+        description: time in min
+        type: integer
+    required:
+      - runnerId
+      - raceId
+      - time
+
+  Results:
+    type: array
+    items:
+      $ref: '#/definitions/Result'
+
+
