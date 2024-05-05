@@ -69,9 +69,9 @@ paths:
       parameters:
         - name: ID
           in: path
+          description: id of the runner
           required: true
-          schema:
-            type: integer
+          type: integer
       responses:
         200:
           description: List of the runners from the race
@@ -155,9 +155,9 @@ paths:
       parameters:
         - name: VERSENYID
           in: path
+          description: Id of the race
           required: true
-          schema:
-            type: integer
+          type: integer
       responses:
         200:
           description: Average time of results for the race
