@@ -1,13 +1,13 @@
-package com.example.futoverseny;
+package org.openapitools;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FutoversenyApplicationTests {
+class OpenApiGeneratorApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
