@@ -21,10 +21,6 @@ paths:
           description: List of the runners
           schema:
             $ref: '#/definitions/Runners'
-        400:
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/ErrorResponse'
         404:
           description: Not found
         500:
