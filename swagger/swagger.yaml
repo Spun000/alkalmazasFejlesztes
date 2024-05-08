@@ -6,7 +6,7 @@ info:
   version: 1.0.0
 
 host: localhost:8080
-basePath: /v1
+basePath: /api/v1
 schemes: [https]
 
 paths:
@@ -66,7 +66,8 @@ paths:
           in: path
           description: id of the runner
           required: true
-          type: integer
+          type: string
+          format: uuid
       responses:
         200:
           description: List of the runners from the race
@@ -152,7 +153,8 @@ paths:
           in: path
           description: Id of the race
           required: true
-          type: integer
+          type: string
+          format: uuid
       responses:
         200:
           description: Average time of results for the race
@@ -184,7 +186,8 @@ definitions:
     type: object
     properties:
       id:
-        type: integer
+        type: string
+        format: uuid
       sex:
         type: string
         enum: [ male,female ]
@@ -193,7 +196,6 @@ definitions:
       name:
         type: string
     required:
-      - id
       - sex
       - age
       - name
@@ -212,7 +214,8 @@ definitions:
         description: distance in km
         type: integer
       id:
-        type: integer
+        type: string
+        format: uuid
     required:
       - id
 
@@ -220,9 +223,11 @@ definitions:
     type: object
     properties:
       runnerId:
-        type: integer
+        type: string
+        format: uuid
       raceId:
-        type: integer
+        type: string
+        format: uuid
       time:
         description: time in min
         type: integer
