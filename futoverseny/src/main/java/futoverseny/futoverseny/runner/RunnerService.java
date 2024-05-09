@@ -10,10 +10,15 @@ import java.util.List;
 @Service
 public class RunnerService {
 
+    List<Runner> runners = new ArrayList<Runner>();
+
     public ResponseEntity<List<Runner>> getRunners() {
-        List<Runner> runners = new ArrayList<Runner>();
-        runners.add(new Runner(Runner.SexEnum.MALE, 18, "John Runner"));
-        runners.add(new Runner(Runner.SexEnum.FEMALE, 18, "Jane Runner"));
         return ResponseEntity.ok(runners);
+    }
+
+    public ResponseEntity<Object> addRunner(Runner runner) throws Exception {
+        runner.Validate();
+        runners.add(runner);
+        return ResponseEntity.ok().build();
     }
 }
