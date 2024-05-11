@@ -1,9 +1,9 @@
 package futoverseny.futoverseny.models.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
-import org.apache.coyote.BadRequestException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.UUID;
 
@@ -30,7 +30,7 @@ public class Runner {
                     return v;
                 }
             }
-            throw new IllegalArgumentException("Unexpected value '" + value + "'");
+            throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "Unexpected value '" + value + "'");
         }
     }
 
@@ -65,16 +65,16 @@ public class Runner {
 
     public void Validate() throws Exception {
         if (id == null) {
-            throw new BadRequestException("id is missing");
+            throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "id is missing");
         }
         if (sex == null) {
-            throw new BadRequestException("sex is missing");
+            throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "sex is missing");
         }
-        if (age == null || age == 0) {
-            throw new BadRequestException("age is missing");
+        if (age == null || age <= 0) {
+            throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "age is missing or invalid");
         }
         if (name == null || name.isEmpty()) {
-            throw new BadRequestException("name is missing");
+            throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "name is missing");
         }
         return;
     }

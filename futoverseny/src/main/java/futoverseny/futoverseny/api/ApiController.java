@@ -2,7 +2,10 @@ package futoverseny.futoverseny.api;
 
 import futoverseny.futoverseny.models.api.ErrorResponse;
 import futoverseny.futoverseny.models.api.Runner;
+import futoverseny.futoverseny.models.api.Result;
+import futoverseny.futoverseny.models.api.Race;
 import futoverseny.futoverseny.runner.RunnerService;
+import futoverseny.futoverseny.results.ResultsService;
 import futoverseny.futoverseny.race.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,39 +21,82 @@ import java.util.UUID;
 public class ApiController {
     private final RunnerService runnerService;
     private final RaceService raceService;
+    private final ResultsService resultsService;
 
     @Autowired
-    public ApiController(RunnerService runnerService, RaceService raceService) {
+    public ApiController(RunnerService runnerService, RaceService raceService, ResultsService resultsService) {
         this.runnerService = runnerService;
         this.raceService = raceService;
+        this.resultsService = resultsService;
     }
 
     @GetMapping(path = "getRunners")
-    public ResponseEntity<List<Runner>> GetRunners() {
-        return runnerService.getRunners();
+    public ResponseEntity<Object> GetRunners() {
+        try {
+            return runnerService.getRunners();
+        } catch (Exception e) {
+            return HandleException(e);
+        }
     }
 
     @PostMapping(path = "addRunner")
-    public ResponseEntity<Object> AddRunner(@RequestBody Runner runner) {
+    public ResponseEntity<Object> AddRunner(@RequestBody(required = true) Runner runner) {
         System.out.println("AddRunner");
         try {
             return runnerService.addRunner(runner);
-        }
-        catch (HttpStatusCodeException e) {
-            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(new ErrorResponse(e.getMessage()));
-            }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponse(e.getMessage()));
+            return HandleException(e);
         }
-
-        return null;
     }
 
     @GetMapping(path = "getRaceRunners/{ID}")
-    public ResponseEntity<List<Runner>> GetRaceRunners(@PathVariable(required = true) UUID ID) {
-        return raceService.getRaceRunners(ID);
+    public ResponseEntity<Object> GetRaceRunners(@PathVariable(required = true) UUID ID) {
+        try {
+            return resultsService.getRaceRunners(ID);
+        } catch (Exception e) {
+            return HandleException(e);
+        }
+    }
+
+    @PostMapping(path = "updateRace")
+    public ResponseEntity<Object> UpdateRace(@RequestBody(required = true) Race race) {
+        try {
+            return raceService.updateRace(race);
+        } catch (Exception e) {
+            return HandleException(e);
+        }
+    }
+
+    @PostMapping(path = "addResult")
+    public ResponseEntity<Object> AddResult(@RequestBody(required = true) Result result) {
+        try {
+            return resultsService.addResult(result);
+        } catch (Exception e) {
+            return HandleException(e);
+        }
+    }
+
+    @GetMapping(path = "getAverageTime/{VERSENYID}")
+    public ResponseEntity<Object> GetAverageTime(@PathVariable(required = true) UUID VERSENYID) {
+        try {
+            return raceService.getAverageTime(VERSENYID);
+        } catch (Exception e) {
+            return HandleException(e);
+        }
+    }
+
+    public static ResponseEntity<Object> HandleException(Exception e) {
+            if (e instanceof HttpStatusCodeException) {
+                return switch (((HttpStatusCodeException) e).getStatusCode()) {
+                    case HttpStatus.NOT_FOUND -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                            .body(new ErrorResponse(e.getMessage()));
+                    case HttpStatus.BAD_REQUEST -> ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new ErrorResponse(e.getMessage()));
+                    default -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body(new ErrorResponse(e.getMessage()));
+                };
+            }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(e.getMessage()));
     }
 }
