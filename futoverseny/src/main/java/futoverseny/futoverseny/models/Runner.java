@@ -1,12 +1,17 @@
-package futoverseny.futoverseny.models.api;
+package futoverseny.futoverseny.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.UUID;
 
+@Entity
+@Table(name="Runners")
 public class Runner {
     public enum SexEnum {
         MALE("male"),
@@ -34,6 +39,7 @@ public class Runner {
         }
     }
 
+    @Id
     public UUID id;
     public SexEnum sex;
     public Integer age;
@@ -63,7 +69,7 @@ public class Runner {
         this.name = name;
     }
 
-    public void Validate() throws Exception {
+    public void Validate() throws HttpClientErrorException {
         if (id == null) {
             throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "id is missing");
         }
@@ -76,6 +82,5 @@ public class Runner {
         if (name == null || name.isEmpty()) {
             throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "name is missing");
         }
-        return;
     }
 }

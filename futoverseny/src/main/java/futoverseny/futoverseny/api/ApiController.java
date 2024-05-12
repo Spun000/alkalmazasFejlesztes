@@ -1,19 +1,18 @@
 package futoverseny.futoverseny.api;
 
 import futoverseny.futoverseny.models.api.ErrorResponse;
-import futoverseny.futoverseny.models.api.Runner;
-import futoverseny.futoverseny.models.api.Result;
-import futoverseny.futoverseny.models.api.Race;
-import futoverseny.futoverseny.runner.RunnerService;
-import futoverseny.futoverseny.results.ResultsService;
-import futoverseny.futoverseny.race.RaceService;
+import futoverseny.futoverseny.models.Runner;
+import futoverseny.futoverseny.models.Result;
+import futoverseny.futoverseny.models.Race;
+import futoverseny.futoverseny.services.RunnerService;
+import futoverseny.futoverseny.services.ResultsService;
+import futoverseny.futoverseny.services.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -79,7 +78,7 @@ public class ApiController {
     @GetMapping(path = "getAverageTime/{VERSENYID}")
     public ResponseEntity<Object> GetAverageTime(@PathVariable(required = true) UUID VERSENYID) {
         try {
-            return raceService.getAverageTime(VERSENYID);
+            return resultsService.getAverageTime(VERSENYID);
         } catch (Exception e) {
             return HandleException(e);
         }

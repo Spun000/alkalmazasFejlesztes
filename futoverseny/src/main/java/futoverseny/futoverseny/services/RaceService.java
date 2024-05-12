@@ -1,0 +1,36 @@
+package futoverseny.futoverseny.services;
+
+import futoverseny.futoverseny.models.api.AverageTime;
+import futoverseny.futoverseny.repository.RaceRepository;
+import futoverseny.futoverseny.repository.RunnerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import futoverseny.futoverseny.models.Race;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.util.UUID;
+
+@Service
+public class RaceService {
+    private final RaceRepository raceRepository;
+
+    @Autowired
+    public RaceService(RaceRepository raceRepository) {
+        this.raceRepository = raceRepository;
+    }
+
+    public ResponseEntity<Object>  updateRace(Race race) throws Exception {
+        race.Validate();
+
+        java.util.Optional<Race> resp = raceRepository.findById(race.id);
+        if (resp.isEmpty())
+        {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"Race not found");
+        }
+
+        raceRepository.save(race);
+        return ResponseEntity.ok().build();
+    }
+}

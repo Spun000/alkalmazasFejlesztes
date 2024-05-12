@@ -21,8 +21,6 @@ paths:
           description: List of the runners
           schema:
             $ref: '#/definitions/Runners'
-        404:
-          description: Not found
         500:
           description: Internal Error
           schema:
