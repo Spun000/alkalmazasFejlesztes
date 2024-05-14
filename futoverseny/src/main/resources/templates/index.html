@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymelead.org" lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Futóverseny</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <img th:class="logo" src="/logo.png" alt="Logo image">
+      </header>
+
+    <section>
+        <h1>Funkciók</h1>
+        <ul th:each="item: ${features}">
+            <li th:text="${item}" />
+        </ul>
+
+        <h2>Versenyek listázása</h2>
+        <a href="/getRaces" target="_self">Versenyek listázása</a>
+
+        <h2>Új verseny létrehozása</h2>
+        <a href="/newRace" target="_self">Új verseny létrehozása</a>
+
+    </section>
+
+    <footer>
+        <p th:class="light-text">FTFYZO</p>
+    </footer>
+</body>
+</html>

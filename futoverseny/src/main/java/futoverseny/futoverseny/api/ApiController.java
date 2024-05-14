@@ -53,7 +53,7 @@ public class ApiController {
     public ResponseEntity<Object> GetRaceRunners(@PathVariable(required = true) UUID ID) {
         try {
 
-            return resultsService.getRaceRunners(ID);
+            return ResponseEntity.ok(resultsService.getRaceRunners(ID));
         } catch (Exception e) {
 
             return HandleException(e);

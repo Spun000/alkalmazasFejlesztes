@@ -29,7 +29,7 @@ public class ResultsService {
         this.runnerRepository = runnerRepository;
     }
 
-    public ResponseEntity<Object> getRaceRunners(UUID id) throws HttpClientErrorException {
+    public List<RaceRunner> getRaceRunners(UUID id) throws HttpClientErrorException {
         if (id == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "id is missing");
         }
@@ -50,7 +50,7 @@ public class ResultsService {
                 return o1.getTime() - o2.getTime();
             }
         });
-        return ResponseEntity.ok(raceRunners);
+        return raceRunners;
     }
 
     public ResponseEntity<Object> addResult(Result result) throws HttpClientErrorException {

@@ -37,9 +37,21 @@ public class Race {
         this.id = id;
     }
 
+    public void ValidateId() throws HttpClientErrorException {
+        if (id == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "id is missing");
+        }
+    }
+
     public void Validate() throws HttpClientErrorException {
         if (id == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "id is missing");
+        }
+        if (name == null || name.isEmpty()) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "name is missing or empty");
+        }
+        if (distance == null || distance <= 0) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "distance is missing or invalid");
         }
     }
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymelead.org" lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Új verseny létrehozása</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <img th:class="logo" src="/logo.png" alt="Logo image">
+</header>
+
+<section>
+    <h1>Új verseny létrehozása</h1>
+    <div th:if="${onError}">
+        <p style="color:red" th:text="${error}" />
+    </div>
+    <form th:action="addRace" th:method="post" th:object="${race}">
+        <label for="name">Verseny név</label>
+        <input type="text" th:field="*{name}">
+
+        <label for="distance">Versenytáv</label>
+        <input type="text" th:field="*{distance}">
+
+        <button type="submit">Létrehozás</button>
+    </form>
+</section>
+
+<footer>
+    <p th:class="light-text">FTFYZO</p>
+</footer>
+</body>
+</html>

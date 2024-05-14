@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import futoverseny.futoverseny.models.Race;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,7 +23,7 @@ public class RaceService {
     }
 
     public ResponseEntity<Object> updateRace(Race race) throws HttpClientErrorException {
-        race.Validate();
+        race.ValidateId();
 
         java.util.Optional<Race> resp = raceRepository.findById(race.getId());
         if (resp.isEmpty())
@@ -41,5 +42,15 @@ public class RaceService {
         raceRepository.save(race);
 
         return ResponseEntity.ok().build();
+    }
+
+    public List<Race> getRaces() throws HttpClientErrorException {
+
+        return raceRepository.findAll();
+    }
+
+    public void addRace(Race race) throws HttpClientErrorException {
+        race.Validate();
+        raceRepository.save(race);
     }
 }
