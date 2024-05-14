@@ -1,5 +1,7 @@
 package futoverseny.futoverseny.models.db;
 
+import futoverseny.futoverseny.models.Race;
+import futoverseny.futoverseny.models.Runner;
 import futoverseny.futoverseny.models.api.Result;
 import jakarta.persistence.*;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,17 @@ public class ResultEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
     private Long resultId;
+    @Column(name = "runner_id")
     private UUID runnerId;
+    @Column(name = "race_id")
     private UUID raceId;
     private Integer time;
+
+    @ManyToOne
+    private Runner runner;
+
+    @ManyToOne
+    private Race race;
 
     public ResultEntity() {
     }

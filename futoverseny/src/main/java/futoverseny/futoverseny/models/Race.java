@@ -1,12 +1,11 @@
 package futoverseny.futoverseny.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import futoverseny.futoverseny.models.db.ResultEntity;
+import jakarta.persistence.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,8 +15,11 @@ public class Race {
     private String name;
     private Integer distance;
     @Id
-    @Column(unique = true)
+    @Column(name = "race_id", unique = true)
     private UUID id;
+
+    @OneToMany(mappedBy = "raceId")
+    private List<ResultEntity> results;
 
     public Race() {
         this.id = UUID.randomUUID();

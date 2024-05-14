@@ -2,14 +2,13 @@ package futoverseny.futoverseny.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import futoverseny.futoverseny.models.db.ResultEntity;
+import jakarta.persistence.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.UUID;
+import java.util.List;
 
 @Entity
 @Table(name="Runners")
@@ -41,11 +40,14 @@ public class Runner {
     }
 
     @Id
-    @Column(unique = true)
+    @Column(name = "runner_id", unique = true)
     private UUID id;
     private SexEnum sex;
     private Integer age;
     private String name;
+
+    @OneToMany(mappedBy = "runnerId")
+    private List<ResultEntity> results;
 
     public Runner() {
         System.out.println("const 0");
