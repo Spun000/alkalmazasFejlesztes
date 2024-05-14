@@ -96,9 +96,11 @@ public class ApiController {
     public static ResponseEntity<Object> HandleException(Exception e) {
             if (e instanceof HttpStatusCodeException) {
                 return switch (((HttpStatusCodeException) e).getStatusCode()) {
+                    case HttpStatus.BAD_REQUEST -> ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new ErrorResponse(e.getMessage()));
                     case HttpStatus.NOT_FOUND -> ResponseEntity.status(HttpStatus.NOT_FOUND)
                             .body(new ErrorResponse(e.getMessage()));
-                    case HttpStatus.BAD_REQUEST -> ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    case HttpStatus.CONFLICT -> ResponseEntity.status(HttpStatus.CONFLICT)
                             .body(new ErrorResponse(e.getMessage()));
                     default -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                 .body(new ErrorResponse(e.getMessage()));

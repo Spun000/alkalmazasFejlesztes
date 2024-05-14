@@ -13,6 +13,7 @@ public class ResultEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
     private Long resultId;
     private UUID runnerId;
     private UUID raceId;

@@ -2,6 +2,7 @@ package futoverseny.futoverseny.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -40,6 +41,7 @@ public class Runner {
     }
 
     @Id
+    @Column(unique = true)
     private UUID id;
     private SexEnum sex;
     private Integer age;

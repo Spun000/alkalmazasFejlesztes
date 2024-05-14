@@ -29,6 +29,15 @@ public class RaceService {
         {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"Race not found");
         }
+
+        if (race.getName() == null || race.getName().isEmpty()) {
+            // use existing name
+            race.setName(resp.get().getName());
+        }
+        if (race.getDistance() == null || race.getDistance() <= 0) {
+            // use existing distance
+            race.setDistance(resp.get().getDistance());
+        }
         raceRepository.save(race);
 
         return ResponseEntity.ok().build();

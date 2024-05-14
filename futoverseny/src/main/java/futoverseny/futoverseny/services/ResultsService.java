@@ -1,5 +1,6 @@
 package futoverseny.futoverseny.services;
 
+import futoverseny.futoverseny.models.Race;
 import futoverseny.futoverseny.models.api.Result;
 import futoverseny.futoverseny.models.api.AverageTime;
 import futoverseny.futoverseny.models.db.ResultEntity;
@@ -24,8 +25,6 @@ public class ResultsService {
     public ResultsService(ResultRepository resultRepository) {
         this.resultRepository = resultRepository;
     }
-    //runners.add(new Runner(Runner.SexEnum.MALE, 18, "John Runner"));
-    //runners.add(new Runner(Runner.SexEnum.FEMALE, 18, "Jane Runner"));
 
     public ResponseEntity<Object> getRaceRunners(UUID id) throws HttpClientErrorException {
         if (id == null) {
@@ -43,6 +42,9 @@ public class ResultsService {
 
     public ResponseEntity<Object> addResult(Result result) throws HttpClientErrorException {
         result.Validate();
+        if (resultExists(result.getRaceId(),result.getRunnerId())) {
+            throw new HttpClientErrorException(HttpStatus.CONFLICT, "result already exists");
+        }
         resultRepository.save(new ResultEntity(result));
 
         return ResponseEntity.ok().build();
@@ -80,5 +82,19 @@ public class ResultsService {
         }
 
         return resultEntities;
+    }
+
+    private boolean resultExists(UUID raceId, UUID runnerId) {
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("time")
+                .withIgnorePaths("resultId");
+        ResultEntity exampleResult = new ResultEntity();
+        exampleResult.setRaceId(raceId);
+        exampleResult.setRunnerId(runnerId);
+        Example<ResultEntity> example = Example.of(exampleResult,matcher);
+
+        java.util.Optional<ResultEntity> resp = resultRepository.findOne(example);
+
+        return resp.isPresent();
     }
 }

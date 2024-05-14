@@ -1,5 +1,6 @@
 package futoverseny.futoverseny.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -15,6 +16,7 @@ public class Race {
     private String name;
     private Integer distance;
     @Id
+    @Column(unique = true)
     private UUID id;
 
     public Race() {
@@ -36,12 +38,6 @@ public class Race {
     public void Validate() throws HttpClientErrorException {
         if (id == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "id is missing");
-        }
-        if (distance == null || distance <= 0) {
-            throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "distance is missing or invalid");
-        }
-        if (name == null || name.isEmpty()) {
-            throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "name is missing");
         }
     }
 
