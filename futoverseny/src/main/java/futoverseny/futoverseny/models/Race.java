@@ -12,10 +12,10 @@ import java.util.UUID;
 @Table(name="Races")
 public class Race {
 
-    public String name;
-    public Integer distance;
+    private String name;
+    private Integer distance;
     @Id
-    public UUID id;
+    private UUID id;
 
     public Race() {
         this.id = UUID.randomUUID();
@@ -43,5 +43,38 @@ public class Race {
         if (name == null || name.isEmpty()) {
             throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "name is missing");
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Race{" +
+                "name='" + name + '\'' +
+                ", distance=" + distance +
+                ", id=" + id +
+                '}';
     }
 }

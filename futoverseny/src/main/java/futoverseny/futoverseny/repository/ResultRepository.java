@@ -1,13 +1,12 @@
 package futoverseny.futoverseny.repository;
 
-import futoverseny.futoverseny.models.Result;
-import futoverseny.futoverseny.models.Runner;
+import futoverseny.futoverseny.models.db.ResultEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface ResultRepository extends JpaRepository<Result, UUID> {
+public interface ResultRepository extends JpaRepository<ResultEntity, UUID> {
 }
 

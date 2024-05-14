@@ -1,8 +1,8 @@
 package futoverseny.futoverseny.services;
 
-import futoverseny.futoverseny.models.Result;
-import futoverseny.futoverseny.models.Runner;
+import futoverseny.futoverseny.models.api.Result;
 import futoverseny.futoverseny.models.api.AverageTime;
+import futoverseny.futoverseny.models.db.ResultEntity;
 import futoverseny.futoverseny.repository.ResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -24,65 +24,61 @@ public class ResultsService {
     public ResultsService(ResultRepository resultRepository) {
         this.resultRepository = resultRepository;
     }
+    //runners.add(new Runner(Runner.SexEnum.MALE, 18, "John Runner"));
+    //runners.add(new Runner(Runner.SexEnum.FEMALE, 18, "Jane Runner"));
 
-    public ResponseEntity<Object> getRaceRunners(UUID id) throws Exception {
-        System.out.println("uuid: " + id);
+    public ResponseEntity<Object> getRaceRunners(UUID id) throws HttpClientErrorException {
         if (id == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "id is missing");
         }
-        List<Runner> runners = new ArrayList<Runner>();
-        runners.add(new Runner(Runner.SexEnum.MALE, 18, "John Runner"));
-        runners.add(new Runner(Runner.SexEnum.FEMALE, 18, "Jane Runner"));
-        /*if (runners.isEmpty())
-        {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"No runner found"); // TODO
-        }*/
-        /*if (false)
-        {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Something bad happened); // TODO
-        }*/
-        return ResponseEntity.ok(runners);
+
+        List<ResultEntity> resultEntities = findByRaceId(id);
+        List<Result> results = new ArrayList<Result>();
+        for (ResultEntity resultEntity : resultEntities) {
+            results.add(new Result(resultEntity));
+        }
+
+        return ResponseEntity.ok(results);
     }
 
-    public ResponseEntity<Object> addResult(Result result) throws Exception {
+    public ResponseEntity<Object> addResult(Result result) throws HttpClientErrorException {
         result.Validate();
-        /*if (runners.isEmpty())
-        {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"No runner found"); // TODO
-        }*/
-        /*if (false)
-        {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Something bad happened); // TODO
-        }*/
+        resultRepository.save(new ResultEntity(result));
+
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Object>  getAverageTime(UUID id) throws Exception {
+    public ResponseEntity<Object>  getAverageTime(UUID id) throws HttpClientErrorException {
         if (id == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "id is missing");
         }
 
+        List<ResultEntity> resultEntities = findByRaceId(id);
+        int sumTime = 0;
+        for(ResultEntity r : resultEntities) {
+            sumTime += r.getTime();
+        }
+        int avgTime = (sumTime / resultEntities.size());
+
+        return ResponseEntity.ok(new AverageTime(avgTime));
+    }
+
+    private List<ResultEntity> findByRaceId(UUID id) throws HttpClientErrorException {
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withIgnorePaths("runnerId")
-                .withIgnorePaths("time");
-                //.withMatcher("raceId", );
-        Result exampleResult = new Result(id, UUID.randomUUID(),1);
-        Example<Result> example = Example.of(exampleResult,matcher);
-        List<Result> results = new ArrayList<Result>();
-        results = resultRepository.findAll(example);
-        if (results.isEmpty())
+                .withIgnorePaths("time")
+                .withIgnorePaths("resultId");
+        ResultEntity exampleResult = new ResultEntity();
+        exampleResult.setRaceId(id);
+        Example<ResultEntity> example = Example.of(exampleResult,matcher);
+
+        List<ResultEntity> resultEntities = new ArrayList<ResultEntity>();
+        resultEntities = resultRepository.findAll(example);
+        if (resultEntities.isEmpty())
         {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"No results found");
         }
-        /*if (false)
-        {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Something bad happened); // TODO
-        }*/
-        int summTime = 0;
-        for(Result r : results) {
-            summTime += r.time;
-        }
-        int avgTime = summTime / results.size();
-        return ResponseEntity.ok(new AverageTime(avgTime));
+
+        return resultEntities;
     }
 }

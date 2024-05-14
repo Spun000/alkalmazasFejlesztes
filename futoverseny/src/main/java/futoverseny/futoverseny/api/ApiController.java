@@ -2,7 +2,7 @@ package futoverseny.futoverseny.api;
 
 import futoverseny.futoverseny.models.api.ErrorResponse;
 import futoverseny.futoverseny.models.Runner;
-import futoverseny.futoverseny.models.Result;
+import futoverseny.futoverseny.models.api.Result;
 import futoverseny.futoverseny.models.Race;
 import futoverseny.futoverseny.services.RunnerService;
 import futoverseny.futoverseny.services.ResultsService;
@@ -40,10 +40,11 @@ public class ApiController {
 
     @PostMapping(path = "addRunner")
     public ResponseEntity<Object> AddRunner(@RequestBody(required = true) Runner runner) {
-        System.out.println("AddRunner");
         try {
+
             return runnerService.addRunner(runner);
         } catch (Exception e) {
+
             return HandleException(e);
         }
     }
@@ -51,8 +52,10 @@ public class ApiController {
     @GetMapping(path = "getRaceRunners/{ID}")
     public ResponseEntity<Object> GetRaceRunners(@PathVariable(required = true) UUID ID) {
         try {
+
             return resultsService.getRaceRunners(ID);
         } catch (Exception e) {
+
             return HandleException(e);
         }
     }
@@ -60,8 +63,10 @@ public class ApiController {
     @PostMapping(path = "updateRace")
     public ResponseEntity<Object> UpdateRace(@RequestBody(required = true) Race race) {
         try {
+
             return raceService.updateRace(race);
         } catch (Exception e) {
+
             return HandleException(e);
         }
     }
@@ -69,8 +74,10 @@ public class ApiController {
     @PostMapping(path = "addResult")
     public ResponseEntity<Object> AddResult(@RequestBody(required = true) Result result) {
         try {
+
             return resultsService.addResult(result);
         } catch (Exception e) {
+
             return HandleException(e);
         }
     }
@@ -78,8 +85,10 @@ public class ApiController {
     @GetMapping(path = "getAverageTime/{VERSENYID}")
     public ResponseEntity<Object> GetAverageTime(@PathVariable(required = true) UUID VERSENYID) {
         try {
+
             return resultsService.getAverageTime(VERSENYID);
         } catch (Exception e) {
+
             return HandleException(e);
         }
     }
@@ -95,6 +104,7 @@ public class ApiController {
                                 .body(new ErrorResponse(e.getMessage()));
                 };
             }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse(e.getMessage()));
     }

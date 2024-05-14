@@ -21,16 +21,16 @@ public class RaceService {
         this.raceRepository = raceRepository;
     }
 
-    public ResponseEntity<Object>  updateRace(Race race) throws Exception {
+    public ResponseEntity<Object> updateRace(Race race) throws HttpClientErrorException {
         race.Validate();
 
-        java.util.Optional<Race> resp = raceRepository.findById(race.id);
+        java.util.Optional<Race> resp = raceRepository.findById(race.getId());
         if (resp.isEmpty())
         {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"Race not found");
         }
-
         raceRepository.save(race);
+
         return ResponseEntity.ok().build();
     }
 }

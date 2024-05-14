@@ -40,10 +40,10 @@ public class Runner {
     }
 
     @Id
-    public UUID id;
-    public SexEnum sex;
-    public Integer age;
-    public String name;
+    private UUID id;
+    private SexEnum sex;
+    private Integer age;
+    private String name;
 
     public Runner() {
         System.out.println("const 0");
@@ -82,5 +82,47 @@ public class Runner {
         if (name == null || name.isEmpty()) {
             throw new  HttpClientErrorException(HttpStatus.BAD_REQUEST, "name is missing");
         }
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public SexEnum getSex() {
+        return sex;
+    }
+
+    public void setSex(SexEnum sex) {
+        this.sex = sex;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Runner{" +
+                "id=" + id +
+                ", sex=" + sex +
+                ", age=" + age +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
