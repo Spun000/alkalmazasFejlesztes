@@ -1,10 +1,13 @@
 package futoverseny.futoverseny.services;
 
 import futoverseny.futoverseny.models.Race;
+import futoverseny.futoverseny.models.Runner;
+import futoverseny.futoverseny.models.api.RaceRunner;
 import futoverseny.futoverseny.models.api.Result;
 import futoverseny.futoverseny.models.api.AverageTime;
 import futoverseny.futoverseny.models.db.ResultEntity;
 import futoverseny.futoverseny.repository.ResultRepository;
+import futoverseny.futoverseny.repository.RunnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -13,17 +16,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ResultsService {
-    public  final ResultRepository resultRepository;
+    private  final ResultRepository resultRepository;
+    private final RunnerRepository runnerRepository;
 
     @Autowired
-    public ResultsService(ResultRepository resultRepository) {
+    public ResultsService(ResultRepository resultRepository, RunnerRepository runnerRepository) {
         this.resultRepository = resultRepository;
+        this.runnerRepository = runnerRepository;
     }
 
     public ResponseEntity<Object> getRaceRunners(UUID id) throws HttpClientErrorException {
@@ -32,12 +35,22 @@ public class ResultsService {
         }
 
         List<ResultEntity> resultEntities = findByRaceId(id);
-        List<Result> results = new ArrayList<Result>();
+        List<RaceRunner> raceRunners = new ArrayList<RaceRunner>();
         for (ResultEntity resultEntity : resultEntities) {
-            results.add(new Result(resultEntity));
+            Optional<Runner> runner = runnerRepository.findById(resultEntity.getRunnerId());
+            if (runner.isEmpty()) {
+                throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Runner not found");
+            }
+            raceRunners.add(new RaceRunner(resultEntity.getTime(),runner.get().getName()));
         }
 
-        return ResponseEntity.ok(results);
+        raceRunners.sort(new Comparator<RaceRunner>() {
+            @Override
+            public int compare(RaceRunner o1, RaceRunner o2) {
+                return o1.getTime() - o2.getTime();
+            }
+        });
+        return ResponseEntity.ok(raceRunners);
     }
 
     public ResponseEntity<Object> addResult(Result result) throws HttpClientErrorException {

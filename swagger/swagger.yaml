@@ -70,7 +70,7 @@ paths:
         200:
           description: List of the runners from the race
           schema:
-            $ref: '#/definitions/Runners'
+            $ref: '#/definitions/RaceRunners'
         400:
           description: Bad Request
           schema:
@@ -238,3 +238,19 @@ definitions:
       - raceId
       - time
 
+  RaceRunner:
+    type: object
+    properties:
+      name:
+        type: string
+      time:
+        description: time in min
+        type: integer
+    required:
+      - name
+      - time
+
+  RaceRunners:
+    type: array
+    items:
+      $ref: '#/definitions/RaceRunner'
