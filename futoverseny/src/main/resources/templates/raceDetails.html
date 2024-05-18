@@ -6,30 +6,30 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<header>
-    <img th:class="logo" src="/logo.png" alt="Logo image">
-</header>
+    <header>
+        <div th:replace="fragments/topnav :: navbar"></div>
+    </header>
 
-<section>
-    <h1>Verseny részletek</h1>
-    <div th:if="${onError}">
-        <p style="color:red" th:text="${error}" />
-    </div>
-    <table>
-        <tr>
-            <th th:style="bold">Futó</th>
-            <th th:style="bold">Időeredmény</th>
-            <th></th>
-        </tr>
-        <tr th:each="runner: ${raceRunners}">
-            <td th:text="${runner.name}" />
-            <td th:text="${runner.time}" />
-        </tr>
-    </table>
-</section>
+    <section>
+        <h1>Verseny részletek</h1>
+        <div th:if="${onError}">
+            <p style="color:red" th:text="${error}" />
+        </div>
+        <table>
+            <tr>
+                <th th:style="bold">Futó</th>
+                <th th:style="bold">Időeredmény</th>
+                <th></th>
+            </tr>
+            <tr th:each="runner: ${raceRunners}">
+                <td th:text="${runner.name}" />
+                <td th:text="${runner.time}" />
+            </tr>
+        </table>
+    </section>
 
-<footer>
-    <p th:class="light-text">FTFYZO</p>
-</footer>
+    <footer>
+        <p th:class="light-text">FTFYZO</p>
+    </footer>
 </body>
 </html>

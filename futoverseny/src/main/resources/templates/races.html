@@ -6,34 +6,34 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<header>
-    <img th:class="logo" src="/logo.png" alt="Logo image">
-</header>
+    <header>
+        <div th:replace="fragments/topnav :: navbar"></div>
+    </header>
 
-<section>
-    <h1>Versenyek</h1>
-    <table>
-        <tr>
-            <th th:style="bold">Verseny</th>
-            <th th:style="bold">Versenytáv</th>
-            <th th:style="bold">Verseny azonosító</th>
-            <th></th>
-        </tr>
-        <tr th:each="race: ${races}">
-            <td th:text="${race.name}" />
-            <td th:text="${race.distance}" />
-            <td th:text="${race.id}" />
-            <td>
-                <form th:action="@{'getRaceDetails/{raceId}'(raceId=${race.id})}" th:method="get">
-                    <button type="submit">Részletek</button>
-                </form>
-            </td>
-        </tr>
-    </table>
-</section>
+    <section>
+        <h1>Versenyek</h1>
+        <table>
+            <tr>
+                <th th:style="bold">Verseny</th>
+                <th th:style="bold">Versenytáv</th>
+                <th th:style="bold">Verseny azonosító</th>
+                <th></th>
+            </tr>
+            <tr th:each="race: ${races}">
+                <td th:text="${race.name}" />
+                <td th:text="${race.distance}" />
+                <td th:text="${race.id}" />
+                <td>
+                    <form th:action="@{'getRaceDetails/{raceId}'(raceId=${race.id})}" th:method="get">
+                        <button type="submit">Részletek</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </section>
 
-<footer>
-    <p th:class="light-text">FTFYZO</p>
+    <footer>
+        <p th:class="light-text">FTFYZO</p>
 </footer>
 </body>
 </html>
