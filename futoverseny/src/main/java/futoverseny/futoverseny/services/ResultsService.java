@@ -6,6 +6,7 @@ import futoverseny.futoverseny.models.api.RaceRunner;
 import futoverseny.futoverseny.models.api.Result;
 import futoverseny.futoverseny.models.api.AverageTime;
 import futoverseny.futoverseny.models.db.ResultEntity;
+import futoverseny.futoverseny.repository.RaceRepository;
 import futoverseny.futoverseny.repository.ResultRepository;
 import futoverseny.futoverseny.repository.RunnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ import java.util.*;
 public class ResultsService {
     private  final ResultRepository resultRepository;
     private final RunnerRepository runnerRepository;
+    private final RaceRepository raceRepository;
 
     @Autowired
-    public ResultsService(ResultRepository resultRepository, RunnerRepository runnerRepository) {
+    public ResultsService(ResultRepository resultRepository, RunnerRepository runnerRepository, RaceRepository raceRepository) {
         this.resultRepository = resultRepository;
         this.runnerRepository = runnerRepository;
+        this.raceRepository = raceRepository;
     }
 
     public List<RaceRunner> getRaceRunners(UUID id) throws HttpClientErrorException {
@@ -55,6 +58,14 @@ public class ResultsService {
 
     public ResponseEntity<Object> addResult(Result result) throws HttpClientErrorException {
         result.Validate();
+        Optional<Runner> runner = runnerRepository.findById(result.getRunnerId());
+        if (runner.isEmpty()) {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Runner not found");
+        }
+        Optional<Race> race = raceRepository.findById(result.getRaceId());
+        if (race.isEmpty()) {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Race not found");
+        }
         if (resultExists(result.getRaceId(),result.getRunnerId())) {
             throw new HttpClientErrorException(HttpStatus.CONFLICT, "result already exists");
         }

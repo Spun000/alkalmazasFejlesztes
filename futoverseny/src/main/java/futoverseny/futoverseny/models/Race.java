@@ -22,11 +22,9 @@ public class Race {
     private List<ResultEntity> results;
 
     public Race() {
-        this.id = UUID.randomUUID();
     }
 
     public Race(String name, Integer distance) {
-        this.id = UUID.randomUUID();
         this.name = name;
         this.distance = distance;
     }

@@ -1080,6 +1080,56 @@
 					"name": "Error cases",
 					"item": [
 						{
+							"name": "Update race name and/or distance - id missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"6 km\",\n  \"distance\": 6\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateRace",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateRace"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Update race name and/or distance - id invalid",
 							"event": [
 								{
@@ -1180,7 +1230,7 @@
 							"response": []
 						},
 						{
-							"name": "Update race name and/or distance - id missing",
+							"name": "Update race name and/or distance - name is empty",
 							"event": [
 								{
 									"listen": "test",
@@ -1209,7 +1259,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"name\": \"6 km\",\n  \"distance\": 6\n}",
+									"raw": "{\n  \"id\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\",\n  \"name\": \"\",\n  \"distance\": 6\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",

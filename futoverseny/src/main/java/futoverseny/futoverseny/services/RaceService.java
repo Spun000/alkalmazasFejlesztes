@@ -31,14 +31,19 @@ public class RaceService {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"Race not found");
         }
 
-        if (race.getName() == null || race.getName().isEmpty()) {
+        if (race.getName() == null) {
             // use existing name
             race.setName(resp.get().getName());
+        } else if (race.getName().isEmpty()){
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "name is invalid");
         }
-        if (race.getDistance() == null || race.getDistance() <= 0) {
+        if (race.getDistance() == null) {
             // use existing distance
             race.setDistance(resp.get().getDistance());
+        } else if (race.getDistance() <= 0){
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "distance is invalid");
         }
+
         raceRepository.save(race);
 
         return ResponseEntity.ok().build();
@@ -50,6 +55,7 @@ public class RaceService {
     }
 
     public void addRace(Race race) throws HttpClientErrorException {
+        race.setId(UUID.randomUUID());
         race.Validate();
         raceRepository.save(race);
     }
