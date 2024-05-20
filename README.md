@@ -1,3 +1,5 @@
+<h1>Home: http://localhost::8080</h1>
+
 <h1>Futóverseny Kezelő Alkalmazás</h1>
 <p>Cél: Fejlessz egy webalkalmazást, amely képes kezelni egy futóverseny résztvevőinek adatait, eredményeit, és megjeleníteni azok statisztikáit.<br></p>
 <h2>Funkcionális Követelmények</h2>
