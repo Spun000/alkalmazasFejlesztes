@@ -7,7 +7,7 @@ info:
 
 host: localhost:8080
 basePath: /api/v1
-schemes: [https]
+schemes: [http]
 
 paths:
   /getRunners:
