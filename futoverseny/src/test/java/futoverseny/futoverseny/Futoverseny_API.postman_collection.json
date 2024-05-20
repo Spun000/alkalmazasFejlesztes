@@ -12,6 +12,20 @@
 			"item": [
 				{
 					"name": "Returns a list of runners",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -103,7 +117,326 @@
 			"name": "addRunner",
 			"item": [
 				{
+					"name": "Error cases",
+					"item": [
+						{
+							"name": "Add a new runner - invalid id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"invalidUUID\",\n    \"sex\": \"male\",\n    \"age\": 27,\n    \"name\": \"John Add\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new runner - missing name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"60c66f8c-0e13-4438-a873-4560aad291e8\",\n    \"sex\": \"male\",\n    \"age\": 27\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new runner - missing sex",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"60c66f8c-0e13-4438-a873-4560aad291e8\",\n    \"age\": 27,\n    \"name\": \"John Add\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new runner - invalid sex",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"60c66f8c-0e13-4438-a873-4560aad291e8\",\n    \"age\": 27,\n    \"sex\": \"invalid\",\n    \"name\": \"John Add\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new runner - missing age",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"60c66f8c-0e13-4438-a873-4560aad291e8\",\n    \"sex\": \"male\",\n    \"name\": \"John Add\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add a new runner - invalid age",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"60c66f8c-0e13-4438-a873-4560aad291e8\",\n    \"age\": 0,\n    \"sex\": \"male\",\n    \"name\": \"John Add\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Add a new runner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -267,6 +600,186 @@
 							"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Add a new runner - without id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sex\": \"male\",\n    \"age\": 27,\n    \"name\": \"John Add\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/addRunner",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"addRunner"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"sex\": \"female\",\n  \"age\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"id\": \"<uuid>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"sex\": \"female\",\n  \"age\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"id\": \"<uuid>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+						},
+						{
+							"name": "Internal Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"sex\": \"female\",\n  \"age\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"id\": \"<uuid>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addRunner",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addRunner"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -277,7 +790,114 @@
 					"name": "{ID}",
 					"item": [
 						{
+							"name": "Error cases",
+							"item": [
+								{
+									"name": "Returns a list of runners from the race - invalid id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/getRaceRunners/:ID",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"getRaceRunners",
+												":ID"
+											],
+											"variable": [
+												{
+													"key": "ID",
+													"value": "invalidId",
+													"description": "(Required) id of the runner"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Returns a list of runners from the race - not found",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/getRaceRunners/:ID",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"getRaceRunners",
+												":ID"
+											],
+											"variable": [
+												{
+													"key": "ID",
+													"value": "749467f2-1391-4617-a19b-54d0b8bb3aac",
+													"description": "(Required) id of the runner"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "Returns a list of runners from the race",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
@@ -457,7 +1077,226 @@
 			"name": "updateRace",
 			"item": [
 				{
+					"name": "Error cases",
+					"item": [
+						{
+							"name": "Update race name and/or distance - id invalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"invalid\",\n  \"name\": \"6 km\",\n  \"distance\": 6\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateRace",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateRace"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update race name and/or distance - distance invalid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\",\n  \"name\": \"6 km\",\n  \"distance\": 0\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateRace",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateRace"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update race name and/or distance - id missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"6 km\",\n  \"distance\": 6\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateRace",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateRace"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update race name and/or distance - race not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"740467f2-1391-4617-a19b-5dd0b8bb3aac\",\n  \"name\": \"6 km\",\n  \"distance\": 6\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/updateRace",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"updateRace"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Update race name and/or distance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -658,6 +1497,106 @@
 							"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Update race name and/or distance - update only distance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\",\n  \"distance\": 6\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/updateRace",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"updateRace"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update race name and/or distance - update name only",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\",\n  \"name\": \"new name\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/updateRace",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"updateRace"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -665,7 +1604,1931 @@
 			"name": "addResult",
 			"item": [
 				{
+					"name": "Error cases",
+					"item": [
+						{
+							"name": "Add a new result for the runner and race - runnerId missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"raceId\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\",\n  \"time\": 24\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addResult",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addResult"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add a new result for the runner and race - raceId missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"runnerId\": \"60c66f8c-0e13-4438-a873-3560aad291e9\",\n  \"time\": 24\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addResult",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addResult"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add a new result for the runner and race - time missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"runnerId\": \"60c66f8c-0e13-4438-a873-3560aad291e9\",\n  \"raceId\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addResult",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addResult"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add a new result for the runner and race - invalid time",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"runnerId\": \"60c66f8c-0e13-4438-a873-3560aad291e9\",\n  \"raceId\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\",\n  \"time\": 0\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addResult",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addResult"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add a new result for the runner and race - result already exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Only if result alreadt exists (might have to send the request 2 times)",
+											"pm.test(\"Status code is 409\", function () {",
+											"    pm.response.to.have.status(409);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"runnerId\": \"60c66f8c-0e13-4438-a873-3560aad291e9\",\n  \"raceId\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\",\n  \"time\": 24\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addResult",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addResult"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add a new result for the runner and race - runner not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"runnerId\": \"60c66f8c-0e13-4438-a873-35609ad291e9\",\n  \"raceId\": \"740467f2-1391-4617-a19b-54d0b8bb3aac\",\n  \"time\": 24\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addResult",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addResult"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Add a new result for the runner and race - reace not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"runnerId\": \"60c66f8c-0e13-4438-a873-3560aad291e9\",\n  \"raceId\": \"740467f2-1391-4617-a19b-54d0a8bb3aac\",\n  \"time\": 24\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/addResult",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"addResult"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"runnerId\": \"<uuid>\",\n  \"raceId\": \"<uuid>\",\n  \"time\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/addResult",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"addResult"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
 					"name": "Add a new result for the runner and race",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -931,7 +3794,400 @@
 					"name": "{VERSENYID}",
 					"item": [
 						{
+							"name": "Error cases",
+							"item": [
+								{
+									"name": "Returns the average time of result for the given race - invalid id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"getAverageTime",
+												":VERSENYID"
+											],
+											"variable": [
+												{
+													"key": "VERSENYID",
+													"value": "invalid",
+													"description": "(Required) Id of the race"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Average time of results for the race",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"getAverageTime",
+														":VERSENYID"
+													],
+													"variable": [
+														{
+															"key": "VERSENYID"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"averageTime\": \"<integer>\"\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"getAverageTime",
+														":VERSENYID"
+													],
+													"variable": [
+														{
+															"key": "VERSENYID"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+										},
+										{
+											"name": "Not found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"getAverageTime",
+														":VERSENYID"
+													],
+													"variable": [
+														{
+															"key": "VERSENYID"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"getAverageTime",
+														":VERSENYID"
+													],
+													"variable": [
+														{
+															"key": "VERSENYID"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Returns the average time of result for the given race - race not found",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"getAverageTime",
+												":VERSENYID"
+											],
+											"variable": [
+												{
+													"key": "VERSENYID",
+													"value": "740467f2-1391-4617-a19b-54d0b8ab3aac",
+													"description": "(Required) Id of the race"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Average time of results for the race",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"getAverageTime",
+														":VERSENYID"
+													],
+													"variable": [
+														{
+															"key": "VERSENYID"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"averageTime\": \"<integer>\"\n}"
+										},
+										{
+											"name": "Bad Request",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"getAverageTime",
+														":VERSENYID"
+													],
+													"variable": [
+														{
+															"key": "VERSENYID"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+										},
+										{
+											"name": "Not found",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"getAverageTime",
+														":VERSENYID"
+													],
+													"variable": [
+														{
+															"key": "VERSENYID"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Internal Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/getAverageTime/:VERSENYID",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"getAverageTime",
+														":VERSENYID"
+													],
+													"variable": [
+														{
+															"key": "VERSENYID"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"ErrorMsg\": \"<string>\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
 							"name": "Returns the average time of result for the given race",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
